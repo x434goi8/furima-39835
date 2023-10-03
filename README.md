@@ -15,29 +15,28 @@
 
 ### Association
 
-- has_many :product
-- has_many :purchase_user
+- has_many :products
+- has_many :purchase_users
 
 ## products テーブル
 
-| Column                      | Type       | Options                        |
-| --------------------------- | ---------- | ------------------------------ |
-| user                        | references | null: false, foreign_key: true |
-| image                       | string     | null: false                    |
-| product_name                | string     | null: false                    |
-| product_description         | text       | null: false                    |
-| category                    | string     | null: false                    |
-| condition                   | string     | null: false                    |
-| shipping_fee_responsibility | string     | null: false                    |
-| shipping_origin_region      | string     | null: false                    |
-| shipping_duration           | integer    | null: false                    |
-| price                       | decimal    | null: false                    |
+| Column                         | Type       | Options                        |
+| ------------------------------ | ---------- | ------------------------------ |
+| user                           | references | null: false, foreign_key: true |
+| product_name                   | string     | null: false                    |
+| product_description            | text       | null: false                    |
+| category_id                    | integer    | null: false                    |
+| condition_id                   | integer    | null: false                    |
+| shipping_fee_responsibility_id | integer    | null: false                    |
+| prefecture_id                  | integer    | null: false                    |
+| shipping_duration_id           | integer    | null: false                    |
+| price                          | integer    | null: false                    |
 
 
 ### Association
 
 - belongs_to :user
-- has_many :purchase_user
+- has_one :purchase_user
 
 ## purchases_users テーブル
 
@@ -50,8 +49,8 @@
 ### Association
 
 - belongs_to :user
-- belongs_to :product
-- has_one :delivery_user
+- has_one :product
+- has_one :shipping_detail
 
 
 ## shipping_details テーブル
@@ -59,6 +58,7 @@
 | ------------------ | ---------- | ------------------------------ |
 | purchases_user     | references | null: false, foreign_key: true |
 | postal_code        | string     | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | city_or_district   | string     | null: false                    |
 | street_address     | string     | null: false                    |
 | building_name      | string     |                                |
@@ -66,4 +66,4 @@
 
 ### Association
 
-- has_one :delivery_user
+- belongs_to :purchases_user
