@@ -49,7 +49,7 @@
 ### Association
 
 - belongs_to :user
-- belongs_と :product
+- belongs_to :product
 - has_one :shipping_detail
 
 
