@@ -2,58 +2,68 @@
 
 ## users テーブル
 
-| Column                  | Type   | Options     |
-| ----------------------- | ------ | ----------- |
-| nickname                | string | null: false |
-| email                   | string | null: false |
-| password                | string | null: false |
-| Full Name               | string | null: false |
-| Full Name Kana          | string | null: false |
-| Date of Birth           | data   | null: false |
+| Column                  | Type   | Options                  |
+| ----------------------- | ------ | ------------------------ |
+| nickname                | string | null: false              |
+| email                   | string | null: false, unique:true |
+| encrypted_password      | string | null: false              |
+| last_name               | string | null: false              |
+| first_name              | string | null: false              |
+| last_name_kana          | string | null: false              |
+| first_name_kana         | string | null: false              |
+| date_of_birth           | data   | null: false              |
 
 ### Association
 
-- has_many :products
-- has_one :purchases
+- has_many :product
+- has_many :purchase_user
 
 ## products テーブル
 
 | Column                      | Type       | Options                        |
 | --------------------------- | ---------- | ------------------------------ |
 | user                        | references | null: false, foreign_key: true |
-| Image                       | string     | null: false                    |
-| Product Name                | string     | null: false                    |
-| Product Description         | text       | null: false                    |
-| Category                    | string     | null: false                    |
-| Condition                   | string     | null: false                    |
-| Shipping Fee Responsibility | string     | null: false                    |
-| Shipping Origin Region      | string     | null: false                    |
-| Shipping Duration           | integer    | null: false                    |
-| Price                       | decimal    | null: false                    |
+| image                       | string     | null: false                    |
+| product_name                | string     | null: false                    |
+| product_description         | text       | null: false                    |
+| category                    | string     | null: false                    |
+| condition                   | string     | null: false                    |
+| shipping_fee_responsibility | string     | null: false                    |
+| shipping_origin_region      | string     | null: false                    |
+| shipping_duration           | integer    | null: false                    |
+| price                       | decimal    | null: false                    |
 
 
 ### Association
 
-- belongs_to :users
-- has_one :purchases
+- belongs_to :user
+- has_many :purchase_user
 
-## purchases テーブル
+## purchases_users テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | user               | references | null: false, foreign_key: true |
 | product            | references | null: false, foreign_key: true |
-| Card Number        | string     | null: false                    |
-| Expiration Date    | string     | null: false                    |
-| encrypted_password | string     | null: false                    |
-| Security Code      | string     | null: false                    |
-| Postal Code        | string     | null: false                    |
-| City or District   | string     | null: false                    |
-| Street Address     | string     | null: false                    |
-| Building Name      | string     | null: false                    |
-| Phone Number)      | string     | null: false                    |
+
 
 ### Association
 
-- has_one :users
-- has_one :products
+- belongs_to :user
+- belongs_to :product
+- has_one :delivery_user
+
+
+## shipping_details テーブル
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| purchases_user     | references | null: false, foreign_key: true |
+| postal_code        | string     | null: false                    |
+| city_or_district   | string     | null: false                    |
+| street_address     | string     | null: false                    |
+| building_name      | string     |                                |
+| phone_number       | string     | null: false                    |
+
+### Association
+
+- has_one :delivery_user
