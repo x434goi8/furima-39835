@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'faker'
-require 'gimei'
 
 RSpec.describe User, type: :model do
   before do
