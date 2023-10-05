@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'faker'
-require 'faker-japanese'
-require 'gimei'
 
 RSpec.describe User, type: :model do
   before do
