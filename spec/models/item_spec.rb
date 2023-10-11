@@ -1,5 +1,89 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @item = FactoryBot.build(:item)
+  end
+
+  describe '商品出品機能' do
+    context '出品できる場合' do
+      it '全項目がある場合登録できる' do
+        expect(@item).to be_valid
+      end
+    end
+
+    context '出品できない場合' do
+      it '商品画像（image）が空白の場合登録できない' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors[:image]).to include("can't be blank")
+      end
+
+      it '商品名（product_name）が空白の場合登録できない' do
+        @item.product_name = ' '
+        @item.valid?
+        expect(@item.errors[:product_name]).to include("can't be blank")
+      end
+
+      it '商品の説明（product_description）が空白の場合登録できない' do
+        @item.product_description = ' '
+        @item.valid?
+        expect(@item.errors[:product_description]).to include("can't be blank")
+      end
+
+      it 'カテゴリー（category_id）が空白の場合登録できない' do
+        @item.category_id = ' '
+        @item.valid?
+        expect(@item.errors[:category_id]).to include("can't be blank")
+      end
+
+      it '商品の状態（condition_id）が空白の場合登録できない' do
+        @item.condition_id = ' '
+        @item.valid?
+        expect(@item.errors[:condition_id]).to include("can't be blank")
+      end
+
+      it '配送料の負担（shipping_fee_responsibility_id）が空白の場合登録できない' do
+        @item.shipping_fee_responsibility_id = ' '
+        @item.valid?
+        expect(@item.errors[:shipping_fee_responsibility_id]).to include("can't be blank")
+      end
+
+      it '発送元の地域（prefecture_id）が空白の場合登録できない' do
+        @item.prefecture_id = ' '
+        @item.valid?
+        expect(@item.errors[:prefecture_id]).to include("can't be blank")
+      end
+
+      it '発送までの日数（shipping_duration_id）が空白の場合登録できない' do
+        @item.shipping_duration_id = ' '
+        @item.valid?
+        expect(@item.errors[:shipping_duration_id]).to include("can't be blank")
+      end
+
+      it '販売価格（price）が空白の場合登録できない' do
+        @item.price = nil
+        @item.valid?
+        expect(@item.errors[:price]).to include("can't be blank")
+      end
+
+      it '販売価格（price）が半角数字以外の場合登録できない' do
+        @item.price = '１２３４５'
+        @item.valid?
+        expect(@item.errors[:price]).to include('is not a number')
+      end
+
+      it '販売価格（price）が300以下の場合登録できない' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors[:price]).to include('must be greater than or equal to 300')
+      end
+
+      it '販売価格（price）が9999999以上の場合登録できない' do
+        @item.price = 10000000
+        @item.valid?
+        expect(@item.errors[:price]).to include('must be less than or equal to 9999999')
+      end
+    end
+  end
 end
