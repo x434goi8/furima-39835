@@ -86,9 +86,9 @@ RSpec.describe Item, type: :model do
       end
 
       it 'userが紐づいていなければ保存できない' do
-        item = FactoryBot.build(:item, user: nil)
-        item.valid?
-        expect(item.errors.full_messages).to include("User must exist")
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end
