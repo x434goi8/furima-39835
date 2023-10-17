@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         const tax = salePrice * 0.10;
         const profitAmount = salePrice - tax;
-        addTaxPrice.textContent = tax.toFixed(0);
-        profit.textContent = profitAmount.toFixed(0);
+        addTaxPrice.textContent = Math.floor(tax).toString();
+        profit.textContent = Math.floor(profitAmount).toString();
       }
     }
   });
