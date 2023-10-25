@@ -21,9 +21,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    if @item.purchase && current_user != @item.user
-      redirect_to root_path
-    end
+    return unless @item.purchase && current_user != @item.user
+
+    redirect_to root_path
   end
 
   def destroy
@@ -42,9 +42,9 @@ class ItemsController < ApplicationController
       redirect_to root_path
     end
 
-    if @item.purchase
-      redirect_to root_path
-    end
+    return unless @item.purchase
+
+    redirect_to root_path
   end
 
   private

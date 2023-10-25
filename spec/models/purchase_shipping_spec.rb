@@ -28,7 +28,7 @@ RSpec.describe PurchaseShipping, type: :model do
       it 'postal_codeは、「3桁ハイフン4桁」の半角文字列でなければ登録できない' do
         @purchase_shipping.postal_code = '123456'
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@purchase_shipping.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
 
       it 'prefecture_idが空では登録できない' do
@@ -58,10 +58,10 @@ RSpec.describe PurchaseShipping, type: :model do
       it 'phone_numberは10桁以上11桁以内の半角数値でないと登録できない' do
         @purchase_shipping.phone_number = '12345'
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
+        expect(@purchase_shipping.errors.full_messages).to include('Phone number is invalid. Include hyphen(-)')
       end
 
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @purchase_shipping.token = nil
         @purchase_shipping.valid?
         expect(@purchase_shipping.errors.full_messages).to include("Token can't be blank")
