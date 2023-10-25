@@ -10,7 +10,7 @@ class PurchasesController < ApplicationController
       redirect_to root_path 
     end
 
-    if @item.purchase
+    if @item.purchase != nil
       redirect_to root_path
     end
   end
