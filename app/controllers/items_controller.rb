@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :destroy, :show]
   before_action :set_item, only: [:show, :destroy]
 
   def index
@@ -21,6 +21,12 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find(params[:id])
+
+    if @item.purchase
+      redirect_to root_path
+    end
+
   end
 
   def destroy
