@@ -11,7 +11,7 @@ class PurchaseShipping
     validates :city_or_district
     validates :street_address
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. Include hyphen(-)' }
-    validates :token, presence: true
+    validates :token
   end
 
   def save

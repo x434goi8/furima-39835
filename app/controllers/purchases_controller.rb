@@ -1,33 +1,37 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_item, only: [:index, :create]
 
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @item = Item.find(params[:item_id])
     @purchaseshipping = PurchaseShipping.new
 
-    redirect_to root_path if current_user == @item.user
+    if current_user == @item.user
+      redirect_to root_path 
+    end
 
-    return unless @item.purchase
-
-    redirect_to root_path
+    if @item.purchase
+      redirect_to root_path
+    end
   end
 
   def create
     @purchaseshipping = PurchaseShipping.new(purchase_params)
-    @item = Item.find(params[:item_id])
     if @purchaseshipping.valid?
       pay_item
       @purchaseshipping.save
       redirect_to root_path
     else
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-      @item = Item.find(params[:item_id])
       render :index, status: :unprocessable_entity
     end
   end
 
   private
+
+  def find_item
+    @item = Item.find(params[:item_id])
+  end
 
   def purchase_params
     params.require(:purchase_shipping).permit(:postal_code, :prefecture_id, :city_or_district, :street_address, :building_name, :phone_number).merge(

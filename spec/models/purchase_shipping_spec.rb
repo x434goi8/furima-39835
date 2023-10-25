@@ -55,10 +55,34 @@ RSpec.describe PurchaseShipping, type: :model do
         expect(@purchase_shipping.errors.full_messages).to include("Phone number can't be blank")
       end
 
-      it 'phone_numberは10桁以上11桁以内の半角数値でないと登録できない' do
+      it 'phone_number9桁以下では登録できない' do
         @purchase_shipping.phone_number = '12345'
         @purchase_shipping.valid?
         expect(@purchase_shipping.errors.full_messages).to include('Phone number is invalid. Include hyphen(-)')
+      end
+
+      it 'phone_number12桁以上では登録できない' do
+        @purchase_shipping.phone_number = '011122223333'
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include('Phone number is invalid. Include hyphen(-)')
+      end
+
+      it 'phone_numberに半角数字以外が含まれている場合は購入できない' do
+        @purchase_shipping.phone_number = 'a9012345678'
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include('Phone number is invalid. Include hyphen(-)')
+      end
+
+      it 'userが紐付いていなければ購入できない' do
+        @purchase_shipping.user_id = nil
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'itemが紐付いていなければ購入できない' do
+        @purchase_shipping.item_id = nil
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include("Item can't be blank")
       end
 
       it 'tokenが空では登録できないこと' do
