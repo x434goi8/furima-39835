@@ -5,12 +5,8 @@ class PurchasesController < ApplicationController
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @purchaseshipping = PurchaseShipping.new
-
-    if current_user == @item.user
-      redirect_to root_path 
-    end
-
-    if @item.purchase != nil
+  
+    if current_user == @item.user || @item.purchase != nil
       redirect_to root_path
     end
   end
