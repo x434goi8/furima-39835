@@ -8,9 +8,13 @@ window.addEventListener('load', () => {
     const price = parseInt(priceInput.value, 10);
 
     if (!isNaN(price)) {
-      const tax = Math.ceil(Math.floor(price * 1.1 * 100) / 100); // 税額（誤差を防ぐ）
+      const tax = Math.floor(price * 0.1); // 税額（小数点以下を切り捨て）
       const profit = price - tax; // 利益
-      addTaxDom.innerHTML = tax;
+      if (tax === 0) {
+        addTaxDom.innerHTML = "";
+      } else {
+        addTaxDom.innerHTML = tax;
+      }
       addProfitDom.innerHTML = profit;
     }
   });
