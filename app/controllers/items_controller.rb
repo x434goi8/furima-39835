@@ -36,7 +36,6 @@ class ItemsController < ApplicationController
     if current_user != @item.user
       redirect_to root_path
     end
-
     if @item.purchase != nil
       redirect_to root_path
     end
@@ -58,6 +57,8 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path
   end
 
   def item_params
